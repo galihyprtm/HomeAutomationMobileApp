@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC,Security.Guard", "BMC,S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestApp", "TestApp\TestApp.csproj", "{8378C472-EF05-440A-B010-89C9AFAE2D2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC.Security.Models", "BMC.Security.Models\BMC.Security.Models.csproj", "{1D7CD259-D7D3-4A2F-87CE-2A9714EED9D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BMC.Security.Models", "BMC.Security.Models\BMC.Security.Models.csproj", "{1D7CD259-D7D3-4A2F-87CE-2A9714EED9D3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC.Security.Web", "BMC.Security.Web\BMC.Security.Web.csproj", "{37C14745-312D-4E67-BF6C-465ACDDD9BAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC.Security.CCTV", "BMC.Security.CCTV\BMC.Security.CCTV.csproj", "{7B9CF420-E6EE-491E-8481-492E9E888BEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +93,22 @@ Global
 		{37C14745-312D-4E67-BF6C-465ACDDD9BAB}.Release|x64.Build.0 = Release|Any CPU
 		{37C14745-312D-4E67-BF6C-465ACDDD9BAB}.Release|x86.ActiveCfg = Release|Any CPU
 		{37C14745-312D-4E67-BF6C-465ACDDD9BAB}.Release|x86.Build.0 = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|x64.Build.0 = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|ARM.Build.0 = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|x64.ActiveCfg = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|x64.Build.0 = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7B9CF420-E6EE-491E-8481-492E9E888BEB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
