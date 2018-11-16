@@ -24,14 +24,14 @@ namespace BMC.Security.Web.Helpers
         private readonly static string s_connectionString = ConfigurationManager.AppSettings["IoTCon"];
 
         // Invoke the direct method on the device, passing the payload
-        public async Task InvokeMethod(string ActionName="PlaySound", params string[] Params)
+        public async Task InvokeMethod(string DeviceId, string ActionName="PlaySound", params string[] Params)
         {
             var methodInvocation = new CloudToDeviceMethod("DoAction") { ResponseTimeout = TimeSpan.FromSeconds(30) };
             var action = new DeviceAction() { ActionName = ActionName, Params = Params };
             methodInvocation.SetPayloadJson(JsonConvert.SerializeObject(action));
 
             // Invoke the direct method asynchronously and get the response from the simulated device.
-            var response = await s_serviceClient.InvokeDeviceMethodAsync("BMCSecurityBot", methodInvocation);
+            var response = await s_serviceClient.InvokeDeviceMethodAsync(DeviceId, methodInvocation);
 
             Console.WriteLine("Response status: {0}, payload:", response.Status);
             Console.WriteLine(response.GetPayloadAsJson());

@@ -112,6 +112,42 @@ namespace BMC.Security.Web {
         protected global::System.Web.UI.WebControls.Button BtnLedOff;
         
         /// <summary>
+        /// BtnCCTVOn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCCTVOn;
+        
+        /// <summary>
+        /// BtnCCTVOff control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCCTVOff;
+        
+        /// <summary>
+        /// TxtInterval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox TxtInterval;
+        
+        /// <summary>
+        /// BtnCCTVInterval control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnCCTVInterval;
+        
+        /// <summary>
         /// RptControlDevice control.
         /// </summary>
         /// <remarks>

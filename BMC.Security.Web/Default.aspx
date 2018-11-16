@@ -73,6 +73,20 @@
                         <td>
                             <asp:Button CssClass="btn" CommandName="LEDOFF" ID="BtnLedOff" runat="server" Text="Turn Off" /></td>
                     </tr>
+                     <tr>
+                        <td>7</td>
+                        <td>CCTV Watcher Status</td>
+                        <td>
+                            <asp:Button CssClass="btn" CommandName="CCTVStatus" CommandArgument="True" ID="BtnCCTVOn" runat="server" Text="Turn On" />
+                            <asp:Button CssClass="btn" CommandName="CCTVStatus" CommandArgument="False" ID="BtnCCTVOff" runat="server" Text="Turn Off" /></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>CCTV Watcher Update Time</td>
+                        <td>
+                            Interval : <asp:TextBox ID="TxtInterval" TextMode="Number"  runat="server"></asp:TextBox> Detik
+                            <asp:Button CssClass="btn" CommandName="CCTVUpdateTime" ID="BtnCCTVInterval" runat="server" Text="Set Waktu" /></td>
+                    </tr>
                 </table>
                 <table class="table table-bordered table-hovered">
                  <tr>
