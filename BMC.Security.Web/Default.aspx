@@ -99,11 +99,11 @@
                     <asp:Repeater runat="server" ID="RptControlDevice"> 
                         <ItemTemplate>
                              <tr>
-                                <td><%# Eval("No") %></td>
-                                <td>Device <%# Eval("No") %></td>
+                                <td><%# Eval("ID") %></td>
+                                <td><%# Eval("Name") %></td>
                                 <td>
-                                    <asp:Button CssClass="btn btn-info" OnClick="DoAction" CommandName="DEVICEON" CommandArgument='<%#Eval("No") %>' runat="server" Text="On" />
-                                    <asp:Button CssClass="btn btn-danger" OnClick="DoAction" CommandName="DEVICEOFF" CommandArgument='<%#Eval("No") %>' runat="server" Text="Off" />
+                                    <asp:Button CssClass="btn btn-info" OnClick="DoAction" CommandName="DEVICEON" CommandArgument='<%#Eval("IP") %>' runat="server" Text="On" />
+                                    <asp:Button CssClass="btn btn-danger" OnClick="DoAction" CommandName="DEVICEOFF" CommandArgument='<%#Eval("IP") %>' runat="server" Text="Off" />
                                 </td>
                             </tr>
                         </ItemTemplate>

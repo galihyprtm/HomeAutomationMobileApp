@@ -26,9 +26,7 @@ namespace BMC.Security.Web
             BtnCCTVInterval.Click+= DoAction;
             if (!IsPostBack)
             {
-                var data = from x in Enumerable.Range(1, 8).ToList()
-                           orderby x
-                           select new { No = x };
+                var data = DeviceData.GetAllDevices();
                 RptControlDevice.DataSource = data;
                 RptControlDevice.DataBind();
                            
@@ -65,15 +63,15 @@ namespace BMC.Security.Web
 
                     case "DEVICEON":
                         {
-                            string DeviceID = $"Device{btn.CommandArgument}IP";
-                            string URL = $"http://{ConfigurationManager.AppSettings[DeviceID]}/cm?cmnd=Power%20On";
+                            //string DeviceID = $"Device{btn.CommandArgument}IP";
+                            string URL = $"http://{btn.CommandArgument}/cm?cmnd=Power%20On";
                             await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
                         }
                         break;
                     case "DEVICEOFF":
                         {
-                            string DeviceID = $"Device{btn.CommandArgument}IP";
-                            string URL = $"http://{ConfigurationManager.AppSettings[DeviceID]}/cm?cmnd=Power%20Off";
+                            //string DeviceID = $"Device{btn.CommandArgument}IP";
+                            string URL = $"http://{btn.CommandArgument}/cm?cmnd=Power%20Off";
                             await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
                         }
                         break;
