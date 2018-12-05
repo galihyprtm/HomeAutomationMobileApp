@@ -24,10 +24,10 @@ namespace BMC.Security.CCTV
         // subscriptionKey = "0123456789abcdef0123456789ABCDEF"
         private const string subscriptionKey = "ed9496df54b54bca9a46ad451065b604";
         static int cctvCount = 4;
-        static string[] cctvUrl = new string[] { "http://192.168.1.40/cgi-bin/snapshot.cgi?chn=0&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.40/cgi-bin/snapshot.cgi?chn=1&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.40/cgi-bin/snapshot.cgi?chn=2&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.40/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand="};
+        static string[] cctvUrl = new string[] { "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=0&u=admin&p=&q=0&d=1&rand=",
+        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=1&u=admin&p=&q=0&d=1&rand=",
+        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=2&u=admin&p=&q=0&d=1&rand=",
+        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand="};
         static string cctvpath = @"C:\Users\mifma\Documents\temp\";
         // localImagePath = @"C:\Documents\LocalImage.jpg"
         private const string localImagePath = @"<LocalImage>";

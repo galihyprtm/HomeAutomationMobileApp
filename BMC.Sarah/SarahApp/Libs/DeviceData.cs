@@ -21,7 +21,9 @@ namespace SarahApp.Libs
                 new DeviceData (){ ID=3, Name="Living Room Lamp", IP="192.168.1.28" },
                 new DeviceData (){ ID=4, Name="Prayer Room Fan", IP="192.168.1.31" },
                 new DeviceData (){ ID=5, Name="Printer Fan", IP="192.168.1.32" },
-                new DeviceData (){ ID=6, Name="Kitchen Fan", IP="192.168.1.33" }
+                new DeviceData (){ ID=6, Name="Kitchen Fan", IP="192.168.1.33" },
+                 new DeviceData (){ ID=7, Name="Prayer Room", IP="192.168.1.35" },
+                  new DeviceData (){ ID=8, Name="Guest Room", IP="192.168.1.26" }
 
             };
         }

@@ -27,6 +27,6 @@ namespace SarahApp
         public const string ApiUrl = "http://gravicodeabsensiweb.azurewebsites.net/api/TonyVisions";
         public const int IntervalTimerMin = 30;
         public const string BlobConnString = "DefaultEndpointsProtocol=https;AccountName=storagemurahaje;AccountKey=NU2f/5suzFgLyGYplR6ydXQ+6L8STLCRviDqJf+MS8bVWsO3L5VWFK3qaUltdPNwdd092st0eJWQIBvLI0WI1A==;EndpointSuffix=core.windows.net";
-        public const string AzureIoTCon = "HostName = FreeDeviceHub.azure - devices.net; SharedAccessKeyName=iothubowner;SharedAccessKey=pGREIqFsT9rGgDkGJP3K5Vkrg5zmTnNZAxNeqWpT4UM=";
+        public const string AzureIoTCon = "HostName=FreeDeviceHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=pGREIqFsT9rGgDkGJP3K5Vkrg5zmTnNZAxNeqWpT4UM=";
     }
 }

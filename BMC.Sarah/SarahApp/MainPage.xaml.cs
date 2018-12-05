@@ -425,10 +425,11 @@ namespace SarahApp
 
 
                 // Update the help text in the UI to show localized examples
-                string uiOptionsText = string.Format("Try saying '{0}', '{1}' or '{2}'",
+                string uiOptionsText = string.Format("Try saying '{0}', '{1}'",
                     VoiceCommands[TagCommands.Calling][0],
-                    VoiceCommands[TagCommands.TakePhoto][0],
-                    VoiceCommands[TagCommands.TurnOnLamp][0]);
+                    VoiceCommands[TagCommands.TakePhoto][0]
+                    );
+                //VoiceCommands[TagCommands.TurnOnLamp][0]
                 /*
                 listGrammarHelpText.Text = string.Format("{0}\n{1}",
                     speechResourceMap.GetValue("ListGrammarHelpText", speechContext).ValueAsString,
@@ -699,6 +700,7 @@ namespace SarahApp
                         case TagCommands.Thanks:
                             await speech.Read("My pleasure boss");
                             break;
+                            /*
                         case TagCommands.TurnOnLamp:
                             {
                                 await speech.Read("Turn on the light");
@@ -713,6 +715,7 @@ namespace SarahApp
                                 client.Publish("mifmasterz/assistant/control", Pesan, MqttMsgBase.QOS_LEVEL_AT_MOST_ONCE, false);
                             }
                             break;
+                            */
                         case TagCommands.ReciteQuran:
                             {
                                 try
