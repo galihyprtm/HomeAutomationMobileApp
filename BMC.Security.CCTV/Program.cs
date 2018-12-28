@@ -61,34 +61,16 @@ namespace BMC.Security.CCTV
         {
             try
             {
-                Console.OutputEncoding = Encoding.UTF8;
-
-                string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-
-                if (String.IsNullOrWhiteSpace(environment))
-                    throw new ArgumentNullException("Environment not found in ASPNETCORE_ENVIRONMENT");
-
-                Console.WriteLine("Environment: {0}", environment);
-
-
+                
                 // Set up configuration sources.
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(Path.Combine(AppContext.BaseDirectory))
                     .AddJsonFile("appsettings.json", optional: true);
-                if (environment == "Development")
-                {
-
-                    builder
-                        .AddJsonFile(
-                            Path.Combine(AppContext.BaseDirectory, string.Format("..{0}..{0}..{0}", Path.DirectorySeparatorChar), $"appsettings.{environment}.json"),
-                            optional: true
-                        );
-                }
-                else
-                {
-                    builder
-                        .AddJsonFile($"appsettings.{environment}.json", optional: true);
-                }
+                builder.AddJsonFile(
+                           Path.Combine(AppContext.BaseDirectory, string.Format("..{0}..{0}..{0}", Path.DirectorySeparatorChar), $"appsettings.Development.json"),
+                           optional: true
+                       );
+               
                 //add env vars
                 //builder.AddEnvironmentVariables();
                 //get config
