@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
 using Microsoft.Azure.Devices.Client;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace BMC.Security.CCTV
 {
     class Program
     {
+        public static IConfigurationRoot Configuration;
         static AzureBlobHelper blobHelper;
         static AzureTableHelper tableHelper;
         static bool IsConnected = false;
@@ -23,11 +25,9 @@ namespace BMC.Security.CCTV
         static string[] keywords = new  string[]{ "person","people","man","women","girl","boy"};
         // subscriptionKey = "0123456789abcdef0123456789ABCDEF"
         private const string subscriptionKey = "ed9496df54b54bca9a46ad451065b604";
+        static string CCTV_IP = "";
         static int cctvCount = 4;
-        static string[] cctvUrl = new string[] { "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=0&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=1&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=2&u=admin&p=&q=0&d=1&rand=",
-        "http://192.168.1.38/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand="};
+        static string[] cctvUrl = null;
         static string cctvpath = @"C:\Users\mifma\Documents\temp\";
         // localImagePath = @"C:\Documents\LocalImage.jpg"
         private const string localImagePath = @"<LocalImage>";
@@ -61,6 +61,45 @@ namespace BMC.Security.CCTV
         {
             try
             {
+                Console.OutputEncoding = Encoding.UTF8;
+
+                string environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+                if (String.IsNullOrWhiteSpace(environment))
+                    throw new ArgumentNullException("Environment not found in ASPNETCORE_ENVIRONMENT");
+
+                Console.WriteLine("Environment: {0}", environment);
+
+
+                // Set up configuration sources.
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(Path.Combine(AppContext.BaseDirectory))
+                    .AddJsonFile("appsettings.json", optional: true);
+                if (environment == "Development")
+                {
+
+                    builder
+                        .AddJsonFile(
+                            Path.Combine(AppContext.BaseDirectory, string.Format("..{0}..{0}..{0}", Path.DirectorySeparatorChar), $"appsettings.{environment}.json"),
+                            optional: true
+                        );
+                }
+                else
+                {
+                    builder
+                        .AddJsonFile($"appsettings.{environment}.json", optional: true);
+                }
+                //add env vars
+                //builder.AddEnvironmentVariables();
+                //get config
+                Configuration = builder.Build();
+
+                CCTV_IP = Configuration.GetSection("server").GetSection("cctv-dvr-ip").Value;
+                cctvUrl = new string[] { $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=0&u=admin&p=&q=0&d=1&rand=",
+        $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=1&u=admin&p=&q=0&d=1&rand=",
+        $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=2&u=admin&p=&q=0&d=1&rand=",
+        $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand="};
+
                 if (!IsConnected)
                 {
                     var path = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\CCTV\\Gambar\\";
@@ -120,9 +159,11 @@ namespace BMC.Security.CCTV
                         break;
                     case "CCTVStatus":
                         IsPatrol = Convert.ToBoolean(action.Params[0]);
+                        Console.WriteLine($"CCTV Watcher Set to {IsPatrol}");
                         break;
                     case "CCTVUpdateTime":
                         TimeInterval = Convert.ToInt32(action.Params[0]);
+                        Console.WriteLine($"CCTV Update Time Set to {TimeInterval} seconds");
                         break;
 
                 }
