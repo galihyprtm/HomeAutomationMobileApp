@@ -24,6 +24,10 @@ namespace BMC.Security.Web
             BtnCCTVOn.Click+= DoAction;
             BtnCCTVOff.Click+= DoAction;
             BtnCCTVInterval.Click+= DoAction;
+            BtnRelay1.Click += DoAction;
+            BtnRelay1Off.Click += DoAction;
+            BtnRelay2.Click += DoAction;
+            BtnRelay2Off.Click += DoAction;
             if (!IsPostBack)
             {
                 var data = DeviceData.GetAllDevices();
@@ -82,6 +86,12 @@ namespace BMC.Security.Web
                         var interval = string.IsNullOrEmpty(TxtInterval.Text) ? "10" : TxtInterval.Text;
                         await iot.InvokeMethod("CCTV_Watcher", "CCTVUpdateTime", new string[] { interval });
 
+                        break;
+                    case "Relay1":
+                        await iot.InvokeMethod("hidroponik", "Relay1", new string[] { btn.CommandArgument });
+                        break;
+                    case "Relay2":
+                        await iot.InvokeMethod("hidroponik", "Relay2", new string[] { btn.CommandArgument });
                         break;
                 }
             }

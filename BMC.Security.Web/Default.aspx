@@ -87,6 +87,16 @@
                             Interval : <asp:TextBox ID="TxtInterval" TextMode="Number"  runat="server"></asp:TextBox> Detik
                             <asp:Button CssClass="btn" CommandName="CCTVUpdateTime" ID="BtnCCTVInterval" runat="server" Text="Set Waktu" /></td>
                     </tr>
+                     <tr>
+                        <td>9</td>
+                        <td>Hidroponik</td>
+                        <td>
+                            <asp:Button CssClass="btn"  CommandName="Relay1" CommandArgument="True" ID="BtnRelay1" runat="server" Text="Relay 1 On" />
+                            <asp:Button CssClass="btn"  CommandName="Relay1" CommandArgument="False" ID="BtnRelay1Off" runat="server" Text="Relay 1 Off" />
+                             <asp:Button CssClass="btn"  CommandName="Relay2" CommandArgument="True" ID="BtnRelay2" runat="server" Text="Relay 2 On" />
+                            <asp:Button CssClass="btn"  CommandName="Relay2" CommandArgument="False" ID="BtnRelay2Off" runat="server" Text="Relay 2 Off" />
+                        </td>
+                    </tr>
                 </table>
                 <table class="table table-bordered table-hovered">
                  <tr>
