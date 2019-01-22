@@ -28,6 +28,10 @@ namespace BMC.Security.Web
             BtnRelay1Off.Click += DoAction;
             BtnRelay2.Click += DoAction;
             BtnRelay2Off.Click += DoAction;
+            WaterInBtn1.Click += DoAction;
+            WaterInBtn2.Click += DoAction;
+            WaterOutBtn1.Click += DoAction;
+            WaterOutBtn2.Click += DoAction;
             if (!IsPostBack)
             {
                 var data = DeviceData.GetAllDevices();
@@ -92,6 +96,12 @@ namespace BMC.Security.Web
                         break;
                     case "Relay2":
                         await iot.InvokeMethod("hidroponik", "Relay2", new string[] { btn.CommandArgument });
+                        break;
+                    case "WaterIn":
+                        await iot.InvokeMethod("aquascape", "WaterIn", new string[] { btn.CommandArgument });
+                        break;
+                    case "WaterOut":
+                        await iot.InvokeMethod("aquascape", "WaterOut", new string[] { btn.CommandArgument });
                         break;
                 }
             }

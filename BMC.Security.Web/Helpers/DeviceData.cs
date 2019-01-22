@@ -23,6 +23,7 @@ namespace BMC.Security.Web.Helpers
                 new DeviceData (){ ID=6, Name="Kipas Depan Dapur", IP="192.168.1.33" },
                 new DeviceData (){ ID=7, Name="Lampu Musolla", IP="192.168.1.35" },
                 new DeviceData (){ ID=8, Name="Lampu Ruang Tamu", IP="192.168.1.26" }
+               
 
             };
         }

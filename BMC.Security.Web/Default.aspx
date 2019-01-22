@@ -28,7 +28,7 @@
                 </table>
             </asp:Panel>
             <asp:Panel ID="ControlPanel" Visible="false" runat="server">
-                <table class="table">
+                <table class="table" >
                     <tr>
                         <td colspan="3">BMC Security Control 0.1</td>
                     </tr>
@@ -93,8 +93,18 @@
                         <td>
                             <asp:Button CssClass="btn"  CommandName="Relay1" CommandArgument="True" ID="BtnRelay1" runat="server" Text="Relay 1 On" />
                             <asp:Button CssClass="btn"  CommandName="Relay1" CommandArgument="False" ID="BtnRelay1Off" runat="server" Text="Relay 1 Off" />
-                             <asp:Button CssClass="btn"  CommandName="Relay2" CommandArgument="True" ID="BtnRelay2" runat="server" Text="Relay 2 On" />
+                            <asp:Button CssClass="btn"  CommandName="Relay2" CommandArgument="True" ID="BtnRelay2" runat="server" Text="Relay 2 On" />
                             <asp:Button CssClass="btn"  CommandName="Relay2" CommandArgument="False" ID="BtnRelay2Off" runat="server" Text="Relay 2 Off" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Aquascape</td>
+                        <td>
+                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument="True" ID="WaterInBtn1" runat="server" Text="Water In Start" />
+                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument="False" ID="WaterInBtn2" runat="server" Text="Water In Stop" />
+                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="True" ID="WaterOutBtn1" runat="server" Text="Water Out Start" />
+                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="False" ID="WaterOutBtn2" runat="server" Text="Water Out Stop" />
                         </td>
                     </tr>
                 </table>
