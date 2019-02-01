@@ -20,6 +20,9 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using GIS = GHIElectronics.UWP.Shields;
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
+using System.Text;
 
 namespace BMC_Security.Guard
 {
@@ -28,16 +31,19 @@ namespace BMC_Security.Guard
     /// </summary>
     public sealed partial class MainPage : Page
     {
+       
+
         private GIS.FEZHAT hat;
         private DispatcherTimer timer;
         bool IsConnected = false;
         static HttpClient client;
+       
         public MainPage()
         {
             this.InitializeComponent();
 
             Setup();
-
+          
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromMilliseconds(10 * 60 * 1000); //10 minutes
             this.timer.Tick += this.OnTick;
@@ -168,6 +174,7 @@ namespace BMC_Security.Guard
                             TxtStatus.Text = $"open : {action.Params[0]} => {res}";
                         });
                         break;
+                   
                 }
                 // Acknowlege the direct method call with a 200 success message
                 string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";

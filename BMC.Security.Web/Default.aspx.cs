@@ -98,10 +98,10 @@ namespace BMC.Security.Web
                         await iot.InvokeMethod("hidroponik", "Relay2", new string[] { btn.CommandArgument });
                         break;
                     case "WaterIn":
-                        await iot.InvokeMethod("aquascape", "WaterIn", new string[] { btn.CommandArgument });
+                        await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { btn.CommandArgument });
                         break;
                     case "WaterOut":
-                        await iot.InvokeMethod("aquascape", "WaterOut", new string[] { btn.CommandArgument });
+                        await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { btn.CommandArgument });
                         break;
                 }
             }

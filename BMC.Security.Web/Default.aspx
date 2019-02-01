@@ -101,10 +101,10 @@
                         <td>10</td>
                         <td>Aquascape</td>
                         <td>
-                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument="True" ID="WaterInBtn1" runat="server" Text="Water In Start" />
-                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument="False" ID="WaterInBtn2" runat="server" Text="Water In Stop" />
-                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="True" ID="WaterOutBtn1" runat="server" Text="Water Out Start" />
-                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="False" ID="WaterOutBtn2" runat="server" Text="Water Out Stop" />
+                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument= "http://192.168.0.99/PIN0_ON" ID="WaterInBtn1" runat="server" Text="Water In Start" />
+                            <asp:Button CssClass="btn"  CommandName="WaterIn" CommandArgument= "http://192.168.0.99/PIN0_OFF" ID="WaterInBtn2" runat="server" Text="Water In Stop" />
+                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="http://192.168.0.99/PIN1_ON" ID="WaterOutBtn1" runat="server" Text="Water Out Start" />
+                            <asp:Button CssClass="btn"  CommandName="WaterOut" CommandArgument="http://192.168.0.99/PIN1_OFF" ID="WaterOutBtn2" runat="server" Text="Water Out Stop" />
                         </td>
                     </tr>
                 </table>
