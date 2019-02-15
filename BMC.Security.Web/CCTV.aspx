@@ -1,6 +1,6 @@
-﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CCTVLogs.aspx.cs" Inherits="BMC.Security.Web.CCTVLogs" %>
+﻿<%@ Page Async="true" Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="CCTV.aspx.cs" Inherits="BMC.Security.Web.CCTV" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-      <asp:GridView AutoGenerateColumns="False" CssClass="uk-table" ID="GvData" runat="server">
+     <asp:GridView AutoGenerateColumns="False" CssClass="uk-table" ID="GvData" runat="server">
             <Columns>
                 
                 <asp:BoundField DataField="CCTVName" HeaderText="CCTV ID" SortExpression="CCTVName" />

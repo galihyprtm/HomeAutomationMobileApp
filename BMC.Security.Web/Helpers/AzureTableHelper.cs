@@ -51,6 +51,26 @@ namespace BMC.Security.Web.Helpers
             }
         }
 
+        public async Task<bool> InsertDataAbsen(AbsenData data)
+        {
+            try
+            {
+                if (data != null)
+                {
+                    TableOperation tableOperation = TableOperation.Insert(data);
+                    await cloudTable.ExecuteAsync(tableOperation);
+                    Console.WriteLine("Record inserted");
+                }
+                return true;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
+        }
+
+
         public async void CreateNewTable(CloudTable table)
         {
             if (!await table.CreateIfNotExistsAsync())
@@ -71,12 +91,41 @@ namespace BMC.Security.Web.Helpers
 
             // Print the fields for each customer.
             TableContinuationToken token = null;
+            int counter = 0;
             do
             {
+             
                 TableQuerySegment<CCTVData> resultSegment = await cloudTable.ExecuteQuerySegmentedAsync(query, token);
                 token = resultSegment.ContinuationToken;
 
                 foreach (CCTVData entity in resultSegment.Results)
+                {
+                    entity.Tanggal = entity.Tanggal.AddHours(7);
+                    datas.Add(entity);
+                    counter++;
+                }
+                if (counter > 100) break;
+            } while (token != null);
+
+            return datas;
+        }
+
+        public async Task<List<AbsenData>> GetAbsenData()
+        {
+
+            // Create the table query.
+            var datas = new List<AbsenData>();
+
+            TableQuery<AbsenData> query = new TableQuery<AbsenData>().Where(TableQuery.GenerateFilterCondition("IDS", QueryComparisons.NotEqual, ""));
+
+            // Print the fields for each customer.
+            TableContinuationToken token = null;
+            do
+            {
+                TableQuerySegment<AbsenData> resultSegment = await cloudTable.ExecuteQuerySegmentedAsync(query, token);
+                token = resultSegment.ContinuationToken;
+
+                foreach (AbsenData entity in resultSegment.Results)
                 {
                     entity.Tanggal = entity.Tanggal.AddHours(7);
                     datas.Add(entity);
