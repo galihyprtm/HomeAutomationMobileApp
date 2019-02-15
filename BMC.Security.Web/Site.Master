@@ -62,8 +62,11 @@
             </div>
         </nav>
         <div class="uk-container">
+            
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+               
             </asp:ContentPlaceHolder>
+            
             <hr />
             <footer>
                 <p>&copy; <%: DateTime.Now.Year %> - BMC</p>

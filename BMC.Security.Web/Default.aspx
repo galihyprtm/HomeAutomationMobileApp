@@ -1,8 +1,8 @@
 ﻿<%@ Page Async="true" Title="BMC Security 0.1" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="BMC.Security.Web._Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-
-    
+    <asp:UpdatePanel ID="UpdatePanel1" runat="server">
+    <ContentTemplate>
         <div>
             <asp:Panel ID="PassPanel" runat="server">
                 <table class="uk-table">
@@ -173,6 +173,11 @@
             </asp:Panel>
 
         </div>
-   
-
+        </ContentTemplate>
+   </asp:UpdatePanel>
+    <asp:UpdateProgress ID="UpdateProgress1" runat="server">
+        <ProgressTemplate>
+        <p>Loading...</p>            
+        </ProgressTemplate>
+    </asp:UpdateProgress>
 </asp:Content>
