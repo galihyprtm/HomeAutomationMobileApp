@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap mp uap3">
-  <Identity Name="c17c91e8-ba63-4b48-a429-acc75b265224" Publisher="CN=mifma" Version="1.0.0.0" />
+  <Identity Name="c17c91e8-ba63-4b48-a429-acc75b265224" Publisher="CN=gravi" Version="1.0.0.0" />
   <mp:PhoneIdentity PhoneProductId="c17c91e8-ba63-4b48-a429-acc75b265224" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>BMC,Security.Guard</DisplayName>

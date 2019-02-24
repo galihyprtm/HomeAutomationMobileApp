@@ -1,14 +1,8 @@
-﻿using BMC.Security.Models;
-using Microsoft.Azure.Devices.Client;
-using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -19,31 +13,72 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using GIS = GHIElectronics.UWP.Shields;
-// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Text;
+using System.Net.Http;
+using System.Threading.Tasks;
+//using Microsoft.Azure.Devices.Client;
+using Newtonsoft.Json;
+using BMC.Security.Models;
+using System.Net;
+// The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
-namespace BMC_Security.Guard
+namespace BMC.Security.Gateway
 {
+
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
     {
-       
+
 
         private GIS.FEZHAT hat;
         private DispatcherTimer timer;
         bool IsConnected = false;
         static HttpClient client;
+        MqttClient MqttClient;
+        const string DataTopic = "bmc/homeautomation/data";
+        const string ControlTopic = "bmc/homeautomation/control";
        
+        public void PublishMessage(string Message)
+        {
+            MqttClient.Publish(DataTopic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        }
+        void SetupMqtt()
+        {
+            string IPBrokerAddress = "110.35.82.86"; //ConfigurationManager.AppSettings["MqttHost"];
+            string ClientUser = "loradev_mqtt"; //ConfigurationManager.AppSettings["MqttUser"];
+            string ClientPass = "test123";//ConfigurationManager.AppSettings["MqttPass"];
+
+            MqttClient = new MqttClient(IPBrokerAddress);
+
+            // register a callback-function (we have to implement, see below) which is called by the library when a message was received
+            MqttClient.Subscribe(new string[] { ControlTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+            MqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+
+            // use a unique id as client id, each time we start the application
+            var clientId = "bmc-gateway-2";//Guid.NewGuid().ToString();
+
+            MqttClient.Connect(clientId, ClientUser, ClientPass);
+            Console.WriteLine("MQTT is connected");
+        } // this code runs when a message was received
+        async void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            string ReceivedMessage = Encoding.UTF8.GetString(e.Message);
+            if (e.Topic == ControlTopic)
+            {
+                await DoAction(ReceivedMessage);
+
+            }
+        }
         public MainPage()
         {
             this.InitializeComponent();
-
+           
             Setup();
-          
+
             this.timer = new DispatcherTimer();
             this.timer.Interval = TimeSpan.FromMilliseconds(10 * 60 * 1000); //10 minutes
             this.timer.Tick += this.OnTick;
@@ -81,6 +116,7 @@ namespace BMC_Security.Guard
             {
                 if (!IsConnected)
                 {
+                    /*
                     if (s_deviceClient != null)
                     {
                         s_deviceClient.Dispose();
@@ -88,7 +124,9 @@ namespace BMC_Security.Guard
                     // Connect to the IoT hub using the MQTT protocol
                     s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
                     s_deviceClient.SetMethodHandlerAsync("DoAction", DoAction, null).Wait();
+                    */
                     //SendDeviceToCloudMessagesAsync();
+                    SetupMqtt();
                     BtnPlay.Click += (a, b) => { PlaySound("monster.mp3"); };
 
                     this.hat = await GIS.FEZHAT.CreateAsync();
@@ -104,12 +142,12 @@ namespace BMC_Security.Guard
                     client = new HttpClient();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Console.WriteLine(ex);
             }
 
-           
+
         }
         private async void OnTick(object sender, object e)
         {
@@ -143,13 +181,13 @@ namespace BMC_Security.Guard
             }
         }
 
-            // Handle the direct method call
-            private async Task<MethodResponse> DoAction(MethodRequest methodRequest, object userContext)
+        // Handle the direct method call
+        private async Task<string> DoAction(string Data)
         {
-            var data = Encoding.UTF8.GetString(methodRequest.Data);
-            var action = JsonConvert.DeserializeObject<DeviceAction>(data);
+            //var data = Encoding.UTF8.GetString(Data);
+            var action = JsonConvert.DeserializeObject<DeviceAction>(Data);
             // Check the payload is a single integer value
-            if (action!=null)
+            if (action != null)
             {
                 /*
                 Console.ForegroundColor = ConsoleColor.Green;
@@ -174,17 +212,19 @@ namespace BMC_Security.Guard
                             TxtStatus.Text = $"open : {action.Params[0]} => {res}";
                         });
                         break;
-                   
+
                 }
                 // Acknowlege the direct method call with a 200 success message
-                string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
-                return new MethodResponse(Encoding.UTF8.GetBytes(result), 200);
+                string result = "{\"result\":\"Executed direct method: " + action.ActionName + "\"}";
+                return result;
+                //return new MethodResponse(Encoding.UTF8.GetBytes(result), 200);
             }
             else
             {
                 // Acknowlege the direct method call with a 400 error message
                 string result = "{\"result\":\"Invalid parameter\"}";
-                return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
+                return result;
+                //return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
             }
         }
 
@@ -195,7 +235,7 @@ namespace BMC_Security.Guard
                 var res = await client.GetAsync(URL);
                 return res.IsSuccessStatusCode;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                 {
@@ -205,7 +245,7 @@ namespace BMC_Security.Guard
             }
         }
 
-        private static DeviceClient s_deviceClient;
+        //private static DeviceClient s_deviceClient;
 
         // The device connection string to authenticate the device with your IoT hub.
         // Using the Azure CLI:
@@ -214,6 +254,7 @@ namespace BMC_Security.Guard
         //HostName=FreeDeviceHub.azure-devices.net;DeviceId=BMCSecurityBot;SharedAccessKey=bjwkcj0aJc9BBoAhHBN6nidx/s7VODUt90rQBP4GaXE=
 
         // Async method to send simulated telemetry
+        /*
         private static async void SendDeviceToCloudMessagesAsync(EnvData data)
         {
             var message = new Message(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(data)));
@@ -225,9 +266,17 @@ namespace BMC_Security.Guard
             // Send the telemetry message
             await s_deviceClient.SendEventAsync(message);
             Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, "ok");
-            
-        }
 
+        }
+        */
+        private void SendDeviceToCloudMessagesAsync(EnvData data)
+        {
+            var message = JsonConvert.SerializeObject(data);//Encoding.ASCII.GetBytes(
+            PublishMessage(message);
+            Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, "ok");
+
+        }
+        /*
         static async Task ReceiveCommands(DeviceClient deviceClient)
         {
             Console.WriteLine("\nDevice waiting for commands from IoTHub...\n");
@@ -246,9 +295,8 @@ namespace BMC_Security.Guard
                     await deviceClient.CompleteAsync(receivedMessage);
                 }
             }
-        }
+        }*/
 
     }
 
-    
 }

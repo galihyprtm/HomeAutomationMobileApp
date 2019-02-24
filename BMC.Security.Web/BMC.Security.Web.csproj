@@ -46,6 +46,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="M2Mqtt.Net, Version=4.3.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\M2Mqtt.4.3.0.0\lib\net45\M2Mqtt.Net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Azure.Amqp, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Azure.Amqp.2.3.5\lib\net45\Microsoft.Azure.Amqp.dll</HintPath>
     </Reference>
@@ -287,6 +290,7 @@
     <Compile Include="Helpers\AzureIoT.cs" />
     <Compile Include="Helpers\AzureTableHelper.cs" />
     <Compile Include="Helpers\DeviceData.cs" />
+    <Compile Include="Helpers\MqttService.cs" />
     <Compile Include="Models\CCTVData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scan.aspx.cs">

@@ -11,7 +11,7 @@ namespace BMC.Security.Web
 {
     public partial class _Default : Page
     {
-        static AzureIoT iot = new AzureIoT();
+        static MqttService iot = new MqttService();
         protected void Page_Load(object sender, EventArgs e)
         {
             BtnPass.Click += BtnPass_Click;

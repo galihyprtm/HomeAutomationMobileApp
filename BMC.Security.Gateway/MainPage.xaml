@@ -1,0 +1,46 @@
+﻿<Page
+    x:Class="BMC.Security.Gateway.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BMC.Security.Gateway"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid Margin="10,10,10,10">
+        <StackPanel Orientation="Vertical">
+            <TextBlock FontSize="40" Text="BMC Security System 0.1"></TextBlock>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="150"></ColumnDefinition>
+                    <ColumnDefinition></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Last Update :"></TextBlock>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="00:00:00" Name="TxtTimeUpdate"></TextBlock>
+
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Temperature :"></TextBlock>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="0C" Name="TxtTemp"></TextBlock>
+
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="Light :"></TextBlock>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="0Lux" Name="TxtLight"></TextBlock>
+
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Acceleration :"></TextBlock>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="0Lux" Name="TxtAccel"></TextBlock>
+
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Status :"></TextBlock>
+                <TextBlock Grid.Row="4" Grid.Column="1" Text="" Name="TxtStatus"></TextBlock>
+
+            </Grid>
+            <Button Name="BtnPlay" Content="Play Sound"></Button>
+        </StackPanel>
+    </Grid>
+</Page>
