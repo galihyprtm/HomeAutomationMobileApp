@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
-using Microsoft.Azure.Devices.Client;
+//using Microsoft.Azure.Devices.Client;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -11,6 +11,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace BMC.Security.CCTV
 {
@@ -43,7 +45,7 @@ namespace BMC.Security.CCTV
             VisualFeatureTypes.Faces, VisualFeatureTypes.ImageType,
             VisualFeatureTypes.Tags, 
         };
-        private static DeviceClient s_deviceClient;
+        //private static DeviceClient s_deviceClient;
         static HttpClient client;
         static ComputerVisionClient computerVision;
         static void Main(string[] args)
@@ -56,6 +58,41 @@ namespace BMC.Security.CCTV
             Setup();
             Watcher();
             Console.ReadLine();
+        }
+        static MqttClient MqttClient;
+        const string DataTopic = "bmc/homeautomation/data";
+        const string ControlTopic = "bmc/homeautomation/control";
+
+        static public void PublishMessage(string Message)
+        {
+            MqttClient.Publish(DataTopic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+        }
+        static void SetupMqtt()
+        {
+            string IPBrokerAddress = "110.35.82.86"; //ConfigurationManager.AppSettings["MqttHost"];
+            string ClientUser = "loradev_mqtt"; //ConfigurationManager.AppSettings["MqttUser"];
+            string ClientPass = "test123";//ConfigurationManager.AppSettings["MqttPass"];
+
+            MqttClient = new MqttClient(IPBrokerAddress);
+
+            // register a callback-function (we have to implement, see below) which is called by the library when a message was received
+            MqttClient.Subscribe(new string[] { ControlTopic }, new byte[] { MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE });
+            MqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
+
+            // use a unique id as client id, each time we start the application
+            var clientId = "bmc-gateway-2";//Guid.NewGuid().ToString();
+
+            MqttClient.Connect(clientId, ClientUser, ClientPass);
+            Console.WriteLine("MQTT is connected");
+        } // this code runs when a message was received
+        static async void client_MqttMsgPublishReceived(object sender, MqttMsgPublishEventArgs e)
+        {
+            string ReceivedMessage = Encoding.UTF8.GetString(e.Message);
+            if (e.Topic == ControlTopic)
+            {
+              await DoAction(ReceivedMessage);
+
+            }
         }
         static void Setup()
         {
@@ -92,6 +129,7 @@ namespace BMC.Security.CCTV
                     }
                     tableHelper = new AzureTableHelper("cctv");
                     blobHelper = new AzureBlobHelper();
+                    /*
                     if (s_deviceClient != null)
                     {
                         s_deviceClient.Dispose();
@@ -100,7 +138,8 @@ namespace BMC.Security.CCTV
                     s_deviceClient = DeviceClient.CreateFromConnectionString(APPCONTANTS.DeviceConStr, TransportType.Mqtt);
                     s_deviceClient.SetMethodHandlerAsync("DoAction", DoAction, null).Wait();
                     //SendDeviceToCloudMessagesAsync();
-                   
+                   */
+                    SetupMqtt();
 
 
                     IsConnected = true;
@@ -115,11 +154,10 @@ namespace BMC.Security.CCTV
 
             }
         }
-
-        private static async Task<MethodResponse> DoAction(MethodRequest methodRequest, object userContext)
+        static async Task<string> DoAction(string Data)
         {
-            var data = Encoding.UTF8.GetString(methodRequest.Data);
-            var action = JsonConvert.DeserializeObject<DeviceAction>(data);
+            //var data = Encoding.UTF8.GetString(Data);
+            var action = JsonConvert.DeserializeObject<DeviceAction>(Data);
             // Check the payload is a single integer value
             if (action != null)
             {
@@ -128,6 +166,52 @@ namespace BMC.Security.CCTV
                 Console.WriteLine("Telemetry interval set to {0} seconds", data);
                 Console.ResetColor();
                 */
+                switch (action.ActionName)
+                {
+                    case "PlaySound":
+                      
+                        break;
+                    case "ChangeLED":
+                     
+                        break;
+                    case "TurnOffLED":
+               
+                        break;
+                    case "OpenURL":
+                      
+                        break;
+                    case "CCTVStatus":
+                        IsPatrol = Convert.ToBoolean(action.Params[0]);
+                        Console.WriteLine($"CCTV Watcher Set to {IsPatrol}");
+                        break;
+                    case "CCTVUpdateTime":
+                        TimeInterval = Convert.ToInt32(action.Params[0]);
+                        Console.WriteLine($"CCTV Update Time Set to {TimeInterval} seconds");
+                        break;
+
+                }
+                // Acknowlege the direct method call with a 200 success message
+                string result = "{\"result\":\"Executed direct method: " + action.ActionName + "\"}";
+                return result;
+                //return new MethodResponse(Encoding.UTF8.GetBytes(result), 200);
+            }
+            else
+            {
+                // Acknowlege the direct method call with a 400 error message
+                string result = "{\"result\":\"Invalid parameter\"}";
+                return result;
+                //return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
+            }
+        }
+        /*
+        private static async Task<MethodResponse> DoAction(MethodRequest methodRequest, object userContext)
+        {
+            var data = Encoding.UTF8.GetString(methodRequest.Data);
+            var action = JsonConvert.DeserializeObject<DeviceAction>(data);
+            // Check the payload is a single integer value
+            if (action != null)
+            {
+             
                 switch (action.ActionName)
                 {
                     case "PlaySound":
@@ -159,7 +243,7 @@ namespace BMC.Security.CCTV
                 string result = "{\"result\":\"Invalid parameter\"}";
                 return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
             }
-        }
+        }*/
         protected static CCTVData LogAnalysisResult(ImageAnalysis result,string CCTVName)
         {
             var item = new CCTVData();
