@@ -54,6 +54,7 @@ namespace BMC.Sarah
         // Invoke the direct method on the device, passing the payload
         public Task InvokeMethod(string DeviceId, string ActionName = "PlaySound", params string[] Params)
         {
+            Console.WriteLine($"Do Action -> {ActionName}");
             return Task.Factory.StartNew(() => {
                 var action = new DeviceAction() { ActionName = ActionName, Params = Params };
 

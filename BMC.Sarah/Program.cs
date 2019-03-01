@@ -15,19 +15,34 @@ using Microsoft.CognitiveServices.Speech;
 using Newtonsoft.Json;
 using uPLibrary.Networking.M2Mqtt;
 using uPLibrary.Networking.M2Mqtt.Messages;
-
+using System.Speech.Synthesis;
 namespace BMC.Sarah
 {
     class Program
     {
         static bool IsActive { set; get; } = false;
         static List<DeviceData> Devices = DeviceData.GetAllDevices();
+        static SpeechSynthesizer synth;
         static MqttService iot = new MqttService();
         public static async Task RecognizeSpeechAsync()
         {
             // Creates an instance of a speech config with specified subscription key and service region.
             // Replace with your own subscription key and service region (e.g., "westus").
             var config = SpeechConfig.FromSubscription("6cc36fa4db2a413989da529a8800975f", "southeastasia");
+            synth = new SpeechSynthesizer();
+            foreach (var v in synth.GetInstalledVoices().Select(v => v.VoiceInfo))
+            {
+                Console.WriteLine("Name:{0}, Gender:{1}, Age:{2}",
+                  v.Description, v.Gender, v.Age);
+            }
+
+            // select male senior (if it exists)
+            synth.SelectVoiceByHints(VoiceGender.Female, VoiceAge.Teen);
+
+            // select audio device
+            synth.SetOutputToDefaultAudioDevice();
+
+
 
             // Creates a speech recognizer.
             using (var recognizer = new SpeechRecognizer(config))
@@ -42,8 +57,11 @@ namespace BMC.Sarah
                 // For long-running multi-utterance recognition, use StartContinuousRecognitionAsync() instead.
                 recognizer.Recognized += Recognizer_Recognized;
                 Console.WriteLine("press any key to stop...");
+                synth.Speak("Sarah is ready to serve");
+
                 await recognizer.StartContinuousRecognitionAsync();
                 Console.ReadLine();
+                synth.Dispose();
                 await recognizer.StopKeywordRecognitionAsync();
             }
         }
@@ -101,7 +119,7 @@ namespace BMC.Sarah
 
             var strResponseContent = await response.Content.ReadAsStringAsync();
             var luisObject = JsonConvert.DeserializeObject<LuisResult>(strResponseContent);
-            if(IsActive)Process(luisObject);
+            Process(luisObject);
             // Display the JSON result from LUIS
             Console.WriteLine(strResponseContent.ToString());
         }
@@ -114,31 +132,40 @@ namespace BMC.Sarah
                 {
                     case "Activate":
                         IsActive = true;
+                        synth.Speak($"yes boss");
                         Console.WriteLine("Sarah is Active");
                         break;
                     case "TurnOn":
-                        if (result.entities != null && result.entities.Length>0)
+                        if (IsActive && result.entities != null && result.entities.Length>0)
                         {
                             if (result.entities[0].type == "Device")
                             {
                                 var IP = Devices.Where(a => a.Name.ToLower() == result.entities[0].entity).ToList().FirstOrDefault().IP;
                                 string URL = $"http://{IP}/cm?cmnd=Power%20On";
+                                synth.Speak($"turn on {result.entities[0].entity}");
+
                                 await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
+                                IsActive = false;
                             }
                         }
-                        IsActive = false;
                         break;
                     case "TurnOff":
-                        if (result.entities != null && result.entities.Length > 0)
+                        if (IsActive && result.entities != null && result.entities.Length > 0)
                         {
                             if (result.entities[0].type == "Device")
                             {
                                 var IP = Devices.Where(a => a.Name.ToLower() == result.entities[0].entity).ToList().FirstOrDefault().IP;
                                 string URL = $"http://{IP}/cm?cmnd=Power%20Off";
+                                synth.Speak($"turn off {result.entities[0].entity}");
+
                                 await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
+                                IsActive = false;
+
                             }
                         }
-                        IsActive = false;
+                        break;
+                    case "Thanks":
+                        synth.Speak($"you're welcome");
                         break;
                 }
             }
