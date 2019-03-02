@@ -24,9 +24,9 @@ namespace BMC.Security.Web.Helpers
         {
             MqttClient.Publish(DataTopic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         }
-        public void SendCommand(string Message)
+        public void SendCommand(string Message,string Topic)
         {
-            MqttClient.Publish(ControlTopic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
+            MqttClient.Publish(Topic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         }
         void SetupMqtt()
         {
@@ -54,18 +54,27 @@ namespace BMC.Security.Web.Helpers
             }
         }
         // Invoke the direct method on the device, passing the payload
-        public Task InvokeMethod(string DeviceId, string ActionName = "PlaySound", params string[] Params)
+        public Task InvokeMethod(string DeviceId, string ActionName, params string[] Params)
         {
-            return Task.Factory.StartNew(() => {
+            return Task.Factory.StartNew(() =>
+            {
                 var action = new DeviceAction() { ActionName = ActionName, Params = Params };
-
-                SendCommand(JsonConvert.SerializeObject(action));
+                SendCommand(JsonConvert.SerializeObject(action), ControlTopic);
             });
-           
             //Console.WriteLine("Response status: {0}, payload:", response.Status);
             //Console.WriteLine(response.GetPayloadAsJson());
         }
 
+        public Task InvokeMethod2(string Topic, string ActionName, params string[] Params)
+        {
+            return Task.Factory.StartNew(() => {
+                var action = new DeviceAction() { ActionName = ActionName, Params = Params };
+                SendCommand(JsonConvert.SerializeObject(action), Topic);
+            });
+
+            //Console.WriteLine("Response status: {0}, payload:", response.Status);
+            //Console.WriteLine(response.GetPayloadAsJson());
+        }
 
     }
 }
