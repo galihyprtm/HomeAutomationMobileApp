@@ -80,10 +80,7 @@ namespace BMC.Security.Gateway
            
             Setup();
 
-            this.timer = new DispatcherTimer();
-            this.timer.Interval = TimeSpan.FromMilliseconds(10 * 60 * 1000); //10 minutes
-            this.timer.Tick += this.OnTick;
-            this.timer.Start();
+         
         }
 
         /// <summary>
@@ -135,6 +132,10 @@ namespace BMC.Security.Gateway
                     this.hat.S1.SetLimits(500, 2400, 0, 180);
                     this.hat.S2.SetLimits(500, 2400, 0, 180);
 
+                    this.timer = new DispatcherTimer();
+                    this.timer.Interval = TimeSpan.FromMilliseconds(10000); //10 minutes
+                    this.timer.Tick += this.OnTick;
+                    this.timer.Start();
 
                     IsConnected = true;
                 }
@@ -159,20 +160,24 @@ namespace BMC.Security.Gateway
             {
                 if (IsConnected)
                 {
-                    double x, y, z;
-
-                    this.hat.GetAcceleration(out x, out y, out z);
-                    var light = this.hat.GetLightLevel();
-                    var temp = this.hat.GetTemperature();
-                    var item = new EnvData() { Accel = (x, y, z), Light = light, Temp = temp, LocalTime = DateTime.Now };
-                    SendDeviceToCloudMessagesAsync(item);
-                    await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                    try
                     {
-                        TxtLight.Text = light + " lux";
-                        TxtTemp.Text = temp + " C";
-                        TxtAccel.Text = x + "," + y + "," + z;
-                        TxtTimeUpdate.Text = DateTime.Now.ToString("dd/MMM/yyyy HH:mm:ss");
-                    });
+                        double x, y, z;
+
+                        this.hat.GetAcceleration(out x, out y, out z);
+                        var light = this.hat.GetLightLevel();
+                        var temp = this.hat.GetTemperature();
+                        var item = new EnvData() { Accel = (x, y, z), Light = light, Temp = temp, LocalTime = DateTime.Now };
+                        SendDeviceToCloudMessagesAsync(item);
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            TxtLight.Text = light + " lux";
+                            TxtTemp.Text = temp + " C";
+                            TxtAccel.Text = x + "," + y + "," + z;
+                            TxtTimeUpdate.Text = DateTime.Now.ToString("dd/MMM/yyyy HH:mm:ss");
+                        });
+                    }
+                    catch(Exception ex) { Console.WriteLine(ex); }
                 }
                 else
                 {
