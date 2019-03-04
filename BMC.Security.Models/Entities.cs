@@ -2,7 +2,7 @@
 
 namespace BMC.Security.Models
 {
-    public class Class1
+    public class Entities
     {
     }
     public class DeviceAction

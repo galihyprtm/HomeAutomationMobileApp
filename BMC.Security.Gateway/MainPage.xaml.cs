@@ -13,12 +13,12 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using GIS = GHIElectronics.UWP.Shields;
-using uPLibrary.Networking.M2Mqtt;
-using uPLibrary.Networking.M2Mqtt.Messages;
+//using uPLibrary.Networking.M2Mqtt;
+//using uPLibrary.Networking.M2Mqtt.Messages;
 using System.Text;
 using System.Net.Http;
 using System.Threading.Tasks;
-//using Microsoft.Azure.Devices.Client;
+using Microsoft.Azure.Devices.Client;
 using Newtonsoft.Json;
 using BMC.Security.Models;
 using System.Net;
@@ -38,6 +38,7 @@ namespace BMC.Security.Gateway
         private DispatcherTimer timer;
         bool IsConnected = false;
         static HttpClient client;
+        /*
         MqttClient MqttClient;
         const string DataTopic = "bmc/homeautomation/data";
         const string ControlTopic = "bmc/homeautomation/control";
@@ -72,7 +73,7 @@ namespace BMC.Security.Gateway
                 await DoAction(ReceivedMessage);
 
             }
-        }
+        }*/
         public MainPage()
         {
             this.InitializeComponent();
@@ -116,7 +117,7 @@ namespace BMC.Security.Gateway
             {
                 if (!IsConnected)
                 {
-                    /*
+                    
                     if (s_deviceClient != null)
                     {
                         s_deviceClient.Dispose();
@@ -124,9 +125,9 @@ namespace BMC.Security.Gateway
                     // Connect to the IoT hub using the MQTT protocol
                     s_deviceClient = DeviceClient.CreateFromConnectionString(s_connectionString, TransportType.Mqtt);
                     s_deviceClient.SetMethodHandlerAsync("DoAction", DoAction, null).Wait();
-                    */
+                    
                     //SendDeviceToCloudMessagesAsync();
-                    SetupMqtt();
+                    //SetupMqtt();
                     BtnPlay.Click += (a, b) => { PlaySound("monster.mp3"); };
 
                     this.hat = await GIS.FEZHAT.CreateAsync();
@@ -149,6 +150,9 @@ namespace BMC.Security.Gateway
 
 
         }
+
+     
+
         private async void OnTick(object sender, object e)
         {
             try
@@ -181,6 +185,7 @@ namespace BMC.Security.Gateway
             }
         }
 
+        /*
         // Handle the direct method call
         private async Task<string> DoAction(string Data)
         {
@@ -189,11 +194,7 @@ namespace BMC.Security.Gateway
             // Check the payload is a single integer value
             if (action != null)
             {
-                /*
-                Console.ForegroundColor = ConsoleColor.Green;
-                Console.WriteLine("Telemetry interval set to {0} seconds", data);
-                Console.ResetColor();
-                */
+              
                 switch (action.ActionName)
                 {
                     case "PlaySound":
@@ -226,6 +227,49 @@ namespace BMC.Security.Gateway
                 return result;
                 //return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
             }
+        }*/
+        private async Task<MethodResponse> DoAction(MethodRequest methodRequest, object userContext)
+        {
+            var data = Encoding.UTF8.GetString(methodRequest.Data);
+            var action = JsonConvert.DeserializeObject<DeviceAction>(data);
+            // Check the payload is a single integer value
+            if (action != null)
+            {
+                /*
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine("Telemetry interval set to {0} seconds", data);
+                Console.ResetColor();
+                */
+                switch (action.ActionName)
+                {
+                    case "PlaySound":
+                        PlaySound(action.Params[0]);
+                        break;
+                    case "ChangeLED":
+                        ChangeLED(GIS.FEZHAT.Color.Red);
+                        break;
+                    case "TurnOffLED":
+                        ChangeLED(GIS.FEZHAT.Color.Black);
+                        break;
+                    case "OpenURL":
+                        var res = await OpenUrl(action.Params[0]);
+                        await Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+                        {
+                            TxtStatus.Text = $"open : {action.Params[0]} => {res}";
+                        });
+                        break;
+
+                }
+                // Acknowlege the direct method call with a 200 success message
+                string result = "{\"result\":\"Executed direct method: " + methodRequest.Name + "\"}";
+                return new MethodResponse(Encoding.UTF8.GetBytes(result), 200);
+            }
+            else
+            {
+                // Acknowlege the direct method call with a 400 error message
+                string result = "{\"result\":\"Invalid parameter\"}";
+                return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
+            }
         }
 
         async Task<bool> OpenUrl(string URL)
@@ -245,7 +289,7 @@ namespace BMC.Security.Gateway
             }
         }
 
-        //private static DeviceClient s_deviceClient;
+       private static DeviceClient s_deviceClient;
 
         // The device connection string to authenticate the device with your IoT hub.
         // Using the Azure CLI:
@@ -254,7 +298,7 @@ namespace BMC.Security.Gateway
         //HostName=FreeDeviceHub.azure-devices.net;DeviceId=BMCSecurityBot;SharedAccessKey=bjwkcj0aJc9BBoAhHBN6nidx/s7VODUt90rQBP4GaXE=
 
         // Async method to send simulated telemetry
-        /*
+        
         private static async void SendDeviceToCloudMessagesAsync(EnvData data)
         {
             var message = new Message(Encoding.ASCII.GetBytes(JsonConvert.SerializeObject(data)));
@@ -268,14 +312,14 @@ namespace BMC.Security.Gateway
             Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, "ok");
 
         }
-        */
+        /*
         private void SendDeviceToCloudMessagesAsync(EnvData data)
         {
             var message = JsonConvert.SerializeObject(data);//Encoding.ASCII.GetBytes(
             PublishMessage(message);
             Console.WriteLine("{0} > Sending message: {1}", DateTime.Now, "ok");
 
-        }
+        }*/
         /*
         static async Task ReceiveCommands(DeviceClient deviceClient)
         {

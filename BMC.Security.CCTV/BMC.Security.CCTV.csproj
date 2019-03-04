@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="M2Mqtt" Version="4.3.0" />
     <PackageReference Include="Microsoft.Azure.CognitiveServices.Vision.ComputerVision" Version="3.2.0" />
+    <PackageReference Include="Microsoft.Azure.Devices.Client" Version="1.18.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0-preview.18572.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="3.0.0-preview.18572.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.0.0-preview.18572.1" />
