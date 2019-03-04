@@ -11,7 +11,7 @@ namespace BMC.Security.Web
 {
     public partial class _Default : Page
     {
-        static AzureIoT iot = new AzureIoT();
+        static MqttService iot = new MqttService();
         protected void Page_Load(object sender, EventArgs e)
         {
             BtnPass.Click += BtnPass_Click;
@@ -92,10 +92,10 @@ namespace BMC.Security.Web
 
                         break;
                     case "Relay1":
-                        await iot.InvokeMethod("hidroponik", "Relay1", new string[] { btn.CommandArgument });
+                        await iot.InvokeMethod2("bmc/hidroponic/control", "Relay1", new string[] { btn.CommandArgument });
                         break;
                     case "Relay2":
-                        await iot.InvokeMethod("hidroponik", "Relay2", new string[] { btn.CommandArgument });
+                        await iot.InvokeMethod2("bmc/hidroponic/control", "Relay2", new string[] { btn.CommandArgument });
                         break;
                     case "WaterIn":
                         await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { btn.CommandArgument });

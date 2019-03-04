@@ -1,6 +1,6 @@
 ﻿using Microsoft.Azure.CognitiveServices.Vision.ComputerVision;
 using Microsoft.Azure.CognitiveServices.Vision.ComputerVision.Models;
-using Microsoft.Azure.Devices.Client;
+//using Microsoft.Azure.Devices.Client;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
@@ -11,8 +11,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-//using uPLibrary.Networking.M2Mqtt;
-//using uPLibrary.Networking.M2Mqtt.Messages;
+using uPLibrary.Networking.M2Mqtt;
+using uPLibrary.Networking.M2Mqtt.Messages;
 
 namespace BMC.Security.CCTV
 {
@@ -45,7 +45,7 @@ namespace BMC.Security.CCTV
             VisualFeatureTypes.Faces, VisualFeatureTypes.ImageType,
             VisualFeatureTypes.Tags, 
         };
-        private static DeviceClient s_deviceClient;
+        //private static DeviceClient s_deviceClient;
         static HttpClient client;
         static ComputerVisionClient computerVision;
         static void Main(string[] args)
@@ -59,7 +59,7 @@ namespace BMC.Security.CCTV
             Watcher();
             Console.ReadLine();
         }
-        /*
+        
         static MqttClient MqttClient;
         const string DataTopic = "bmc/homeautomation/data";
         const string ControlTopic = "bmc/homeautomation/control";
@@ -94,7 +94,7 @@ namespace BMC.Security.CCTV
               await DoAction(ReceivedMessage);
 
             }
-        }*/
+        }
         static void Setup()
         {
             try
@@ -130,7 +130,7 @@ namespace BMC.Security.CCTV
                     }
                     tableHelper = new AzureTableHelper("cctv");
                     blobHelper = new AzureBlobHelper();
-                    
+                    /*
                     if (s_deviceClient != null)
                     {
                         s_deviceClient.Dispose();
@@ -139,8 +139,8 @@ namespace BMC.Security.CCTV
                     s_deviceClient = DeviceClient.CreateFromConnectionString(APPCONTANTS.DeviceConStr, TransportType.Mqtt);
                     s_deviceClient.SetMethodHandlerAsync("DoAction", DoAction, null).Wait();
                     //SendDeviceToCloudMessagesAsync();
-                   
-                    //SetupMqtt();
+                   */
+                    SetupMqtt();
 
 
                     IsConnected = true;
@@ -155,7 +155,7 @@ namespace BMC.Security.CCTV
 
             }
         }
-        /*
+        
         static async Task<string> DoAction(string Data)
         {
             //var data = Encoding.UTF8.GetString(Data);
@@ -199,8 +199,8 @@ namespace BMC.Security.CCTV
                 return result;
                 //return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
             }
-        }*/
-        
+        }
+        /*
         private static async Task<MethodResponse> DoAction(MethodRequest methodRequest, object userContext)
         {
             var data = Encoding.UTF8.GetString(methodRequest.Data);
@@ -240,7 +240,7 @@ namespace BMC.Security.CCTV
                 string result = "{\"result\":\"Invalid parameter\"}";
                 return new MethodResponse(Encoding.UTF8.GetBytes(result), 400);
             }
-        }
+        }*/
         protected static CCTVData LogAnalysisResult(ImageAnalysis result,string CCTVName)
         {
             var item = new CCTVData();
