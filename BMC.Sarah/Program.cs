@@ -143,7 +143,7 @@ namespace BMC.Sarah
                                 var IP = Devices.Where(a => a.Name.ToLower() == result.entities[0].entity).ToList().FirstOrDefault().IP;
                                 string URL = $"http://{IP}/cm?cmnd=Power%20On";
                                 synth.Speak($"turn on {result.entities[0].entity}");
-
+                                Console.WriteLine("call :"+URL);
                                 await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
                                 IsActive = false;
                             }
@@ -156,6 +156,7 @@ namespace BMC.Sarah
                             {
                                 var IP = Devices.Where(a => a.Name.ToLower() == result.entities[0].entity).ToList().FirstOrDefault().IP;
                                 string URL = $"http://{IP}/cm?cmnd=Power%20Off";
+                                Console.WriteLine("call :" + URL);
                                 synth.Speak($"turn off {result.entities[0].entity}");
 
                                 await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { URL });
@@ -165,7 +166,7 @@ namespace BMC.Sarah
                         }
                         break;
                     case "Thanks":
-                        synth.Speak($"you're welcome");
+                        //synth.Speak($"you're welcome");
                         break;
                 }
             }
