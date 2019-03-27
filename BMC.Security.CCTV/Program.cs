@@ -68,11 +68,11 @@ namespace BMC.Security.CCTV
         {
             MqttClient.Publish(DataTopic, Encoding.UTF8.GetBytes(Message), MqttMsgBase.QOS_LEVEL_EXACTLY_ONCE, false);
         }
-        static void SetupMqtt()
+        static void SetupMqtt(string IPBrokerAddress, string ClientUser, string ClientPass)
         {
-            string IPBrokerAddress = "110.35.82.86"; //ConfigurationManager.AppSettings["MqttHost"];
-            string ClientUser = "loradev_mqtt"; //ConfigurationManager.AppSettings["MqttUser"];
-            string ClientPass = "test123";//ConfigurationManager.AppSettings["MqttPass"];
+            //string IPBrokerAddress = "23.98.70.88";//"110.35.82.86"; //ConfigurationManager.AppSettings["MqttHost"];
+            //string ClientUser = "loradev_mqtt"; //ConfigurationManager.AppSettings["MqttUser"];
+            //string ClientPass = "test123";//ConfigurationManager.AppSettings["MqttPass"];
 
             MqttClient = new MqttClient(IPBrokerAddress);
 
@@ -81,7 +81,7 @@ namespace BMC.Security.CCTV
             MqttClient.MqttMsgPublishReceived += client_MqttMsgPublishReceived;
 
             // use a unique id as client id, each time we start the application
-            var clientId = "bmc-gateway-2";//Guid.NewGuid().ToString();
+            var clientId = "bmc-cctv-controller";//Guid.NewGuid().ToString();
 
             MqttClient.Connect(clientId, ClientUser, ClientPass);
             Console.WriteLine("MQTT is connected");
@@ -119,6 +119,9 @@ namespace BMC.Security.CCTV
         $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=1&u=admin&p=&q=0&d=1&rand=",
         $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=2&u=admin&p=&q=0&d=1&rand=",
         $"http://{CCTV_IP}/cgi-bin/snapshot.cgi?chn=3&u=admin&p=&q=0&d=1&rand="};
+                var mqtt_host = Configuration.GetSection("server").GetSection("mqtt-host").Value;
+                var mqtt_user = Configuration.GetSection("server").GetSection("mqtt-user").Value;
+                var mqtt_pass = Configuration.GetSection("server").GetSection("mqtt-pass").Value;
 
                 if (!IsConnected)
                 {
@@ -140,7 +143,7 @@ namespace BMC.Security.CCTV
                     s_deviceClient.SetMethodHandlerAsync("DoAction", DoAction, null).Wait();
                     //SendDeviceToCloudMessagesAsync();
                    */
-                    SetupMqtt();
+                    SetupMqtt(mqtt_host,mqtt_user,mqtt_pass);
 
 
                     IsConnected = true;

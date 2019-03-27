@@ -11,9 +11,11 @@ namespace BMC.Security.Web
 {
     public partial class _Default : Page
     {
-        static MqttService iot = new MqttService();
+        static MqttService iot;
         protected void Page_Load(object sender, EventArgs e)
         {
+            if(!IsPostBack)
+                iot = new MqttService();
             BtnPass.Click += BtnPass_Click;
             BtnMonster.Click += DoAction;
             BtnTornado.Click += DoAction;

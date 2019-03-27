@@ -19,6 +19,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC.Sarah", "BMC.Sarah\BMC.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SarahApp", "BMC.Sarah.Old\SarahApp\SarahApp.csproj", "{5EC68D36-B6CB-4F79-AE78-143E6B58B0B4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BMC.Mqtt", "BMC.Mqtt\BMC.Mqtt.csproj", "{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -203,6 +205,26 @@ Global
 		{5EC68D36-B6CB-4F79-AE78-143E6B58B0B4}.Release|x86.ActiveCfg = Release|x86
 		{5EC68D36-B6CB-4F79-AE78-143E6B58B0B4}.Release|x86.Build.0 = Release|x86
 		{5EC68D36-B6CB-4F79-AE78-143E6B58B0B4}.Release|x86.Deploy.0 = Release|x86
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|ARM.Build.0 = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|x64.Build.0 = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Debug|x86.Build.0 = Debug|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|ARM.ActiveCfg = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|ARM.Build.0 = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|ARM64.Build.0 = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|x64.ActiveCfg = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|x64.Build.0 = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|x86.ActiveCfg = Release|Any CPU
+		{80F4360C-7D44-4D47-BA6C-D56FDDDB5DAB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

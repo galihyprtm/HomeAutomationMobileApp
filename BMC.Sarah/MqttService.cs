@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Text;
 using System.Threading.Tasks;
 using uPLibrary.Networking.M2Mqtt;
@@ -28,9 +29,10 @@ namespace BMC.Sarah
         }
         void SetupMqtt()
         {
-            string IPBrokerAddress = CONSTANTS.MqttHost;
-            string ClientUser = CONSTANTS.MqttUser;
-            string ClientPass = CONSTANTS.MqttPass;
+            string IPBrokerAddress = ConfigurationManager.AppSettings["MqttHost"];
+            string ClientUser = ConfigurationManager.AppSettings["MqttUser"];
+            string ClientPass = ConfigurationManager.AppSettings["MqttPass"];
+
 
             MqttClient = new MqttClient(IPBrokerAddress);
 
