@@ -136,6 +136,24 @@
                             </div>
                         </td>
                     </tr>
+                        <tr>
+                        <td>11</td>
+                        <td>Aquaponic</td>
+                        <td>
+                             
+                                    <div class="uk-button-group">
+                                    <asp:Button CssClass="uk-button uk-button-primary"  CommandName="RelayAqua1" CommandArgument="True" ID="BtnRelayAqua1" runat="server" Text="Relay 1 On" />
+                                    <asp:Button CssClass="uk-button uk-button-danger"  CommandName="RelayAqua1" CommandArgument="False" ID="BtnRelayAqua1Off" runat="server" Text="Relay 1 Off" />
+                                    </div>
+                            
+                            <div class="uk-button-group">
+                                    
+                                    <asp:Button CssClass="uk-button uk-button-primary"  CommandName="RelayAqua2" CommandArgument="True" ID="BtnRelayAqua2" runat="server" Text="Relay 2 On" />
+                                    <asp:Button CssClass="uk-button uk-button-danger"  CommandName="RelayAqua2" CommandArgument="False" ID="BtnRelayAqua2Off" runat="server" Text="Relay 2 Off" />
+                                    
+                            </div>
+                        </td>
+                    </tr>
                         </tbody>
                 </table>
                 <table class="uk-table">

@@ -229,6 +229,42 @@ namespace BMC.Security.Web {
         protected global::System.Web.UI.WebControls.Button WaterOutBtn2;
         
         /// <summary>
+        /// BtnRelayAqua1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnRelayAqua1;
+        
+        /// <summary>
+        /// BtnRelayAqua1Off control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnRelayAqua1Off;
+        
+        /// <summary>
+        /// BtnRelayAqua2 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnRelayAqua2;
+        
+        /// <summary>
+        /// BtnRelayAqua2Off control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button BtnRelayAqua2Off;
+        
+        /// <summary>
         /// RptControlDevice control.
         /// </summary>
         /// <remarks>

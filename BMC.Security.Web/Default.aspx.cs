@@ -34,6 +34,11 @@ namespace BMC.Security.Web
             WaterInBtn2.Click += DoAction;
             WaterOutBtn1.Click += DoAction;
             WaterOutBtn2.Click += DoAction;
+
+            BtnRelayAqua1.Click += DoAction;
+            BtnRelayAqua1Off.Click += DoAction;
+            BtnRelayAqua2.Click += DoAction;
+            BtnRelayAqua2Off.Click += DoAction;
             if (!IsPostBack)
             {
                 var data = DeviceData.GetAllDevices();
@@ -104,6 +109,13 @@ namespace BMC.Security.Web
                         break;
                     case "WaterOut":
                         await iot.InvokeMethod("BMCSecurityBot", "OpenURL", new string[] { btn.CommandArgument });
+                        break;
+                    
+                    case "RelayAqua1":
+                        await iot.InvokeMethod2("bmc/aquaponic/control", "Relay1", new string[] { btn.CommandArgument });
+                        break;
+                    case "RelayAqua2":
+                        await iot.InvokeMethod2("bmc/aquaponic/control", "Relay2", new string[] { btn.CommandArgument });
                         break;
                 }
             }

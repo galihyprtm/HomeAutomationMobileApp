@@ -69,6 +69,7 @@ namespace BMC.Sarah
         private static void Recognizer_Recognized(object sender, SpeechRecognitionEventArgs e)
         {
             var result = e.Result;
+            if (e.Result==null || e.Result.Text == null) return;
             // Checks result.
             if (result.Reason == ResultReason.RecognizedSpeech)
             {
@@ -95,6 +96,7 @@ namespace BMC.Sarah
 
         static async void MakeRequest(string QueryText)
         {
+            if (QueryText == null) return;
             var client = new HttpClient();
             var queryString = HttpUtility.ParseQueryString(string.Empty);
 
