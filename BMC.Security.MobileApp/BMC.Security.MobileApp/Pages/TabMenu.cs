@@ -13,6 +13,7 @@ namespace BMC.Security.MobileApp.Pages
             this.BarTextColor = Color.White;            
             Children.Add(new Home());
             Children.Add(new Contact());
+
         }
     }
 }

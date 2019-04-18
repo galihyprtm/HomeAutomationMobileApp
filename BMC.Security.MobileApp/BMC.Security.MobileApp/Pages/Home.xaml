@@ -1,56 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BMC.Security.MobileApp.Pages.Home">
+             x:Class="BMC.Security.MobileApp.Pages.Home"
+             Title="Home Automation">
     <ContentPage.Content visual="Material">
-        <StackLayout>
-            <!--EZ WAY-->
+        <ScrollView>
+        <StackLayout Padding="10,10,10,10">
+            <!--WebView-->
             <!--<WebView Source="http://bmcsecurityweb.azurewebsites.net/"
             VerticalOptions="FillAndExpand"
             HorizontalOptions="FillAndExpand" />-->
             
             <Label Text="Welcome To BMC Security Panel 0.1"
-                VerticalOptions="StartAndExpand" HorizontalTextAlignment="Center" FontSize="Medium"/>
-            <Grid VerticalOptions="StartAndExpand">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="100"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                    <RowDefinition Height="auto"/>
-                </Grid.RowDefinitions>
-                <Label Text="NO" Grid.Column="0" Grid.Row="0" FontAttributes="Bold" />
+                VerticalOptions="Start" HorizontalTextAlignment="Center" FontSize="Medium" Margin="10,0,20,0"/>
+                <Grid VerticalOptions="StartAndExpand">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                        <ColumnDefinition Width="auto"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                    </Grid.RowDefinitions>
+                    <!--<Label Text="NO" Grid.Column="0" Grid.Row="0" FontAttributes="Bold" />
                 <Label Text="DESCRIPTION" Grid.Column="1" Grid.Row="0" FontAttributes="Bold" />
-                <Label Text="ACTION" Grid.Column="2" Grid.Row="0" FontAttributes="Bold" />
+                <Label Text="ACTION" Grid.Column="2" Grid.Row="0" FontAttributes="Bold" />-->
+
+                    <Label Text="1" Grid.Column="1" Grid.Row="1"/>
+                    <Label Text="Keluarkan Suara Monster" Grid.Column="2" Grid.Row="1"/>
+                    <Button x:Name="BtnMonster" Text="Play" Grid.Column="3" Grid.Row="1" CommandParameter="Monster" />
+
+                    <Label Text="2" Grid.Column="1" Grid.Row="2"/>
+                    <Label Text="Keluarkan Suara Tornado Sirine" Grid.Column="2" Grid.Row="2"/>
+                    <Button x:Name="BtnScream" Text="Play" Grid.Column="3" Grid.Row="2" CommandParameter="Scream"/>
+
+                    <Label Text="3" Grid.Column="1" Grid.Row="3"/>
+                    <Label Text="Keluarkan Suara Polisi" Grid.Column="2" Grid.Row="3"/>
+                    <Button x:Name="BtnTornado" Text="Play" Grid.Column="3" Grid.Row="3" CommandParameter="Tornado"/>
+
+                    <Label Text="4" Grid.Column="1" Grid.Row="4"/>
+                    <Label Text="Keluarkan Suara Teriakan" Grid.Column="2" Grid.Row="4"/>
+                    <Button x:Name="BtnPolice" Text="Play" Grid.Column="3" Grid.Row="4" CommandParameter="Police"/>
+
+                    <Label Text="5" Grid.Column="1" Grid.Row="5"/>
+                    <Label Text="Nyalakan LED" Grid.Column="2" Grid.Row="5"/>
+                    <Button x:Name="btnLed1" Text="Play" Grid.Column="3" Grid.Row="5" CommandParameter="LEDON"/>
+
+                    <Label Text="6" Grid.Column="1" Grid.Row="6"/>
+                    <Label Text="Matikan LED" Grid.Column="2" Grid.Row="6"/>
+                    <Button x:Name="btnLed2" Text="Play" Grid.Column="3" Grid.Row="6" CommandParameter="LEDOFF"/>
                 
-                <Label Text="1" Grid.Column="1" Grid.Row="1"/>
-                <Label Text="Keluarkan Suara Monster" Grid.Column="2" Grid.Row="1"/>
-                <Button x:Name="btnSound1" Text="Play" Grid.Column="3" Grid.Row="1"/>
+                <Label Text="8" Grid.Column="1" Grid.Row="8"/>
+                <Label Text="Lampu Depan WC" Grid.Column="2" Grid.Row="8"/>
+                <!--<Button x:Name="btnOn" Text="On" Grid.Column="3" Grid.Row="8" CommandParameter="DEVICEON"/>-->
+                <Button x:Name="btnOff" Text="Off" Grid.Column="3" Grid.Row="8" CommandParameter="DEVICEOFF"/>
 
-                <Label Text="2" Grid.Column="1" Grid.Row="2"/>
-                <Label Text="Keluarkan Suara Tornado Sirine" Grid.Column="2" Grid.Row="2"/>
-                <Button x:Name="btnSound2" Text="Play" Grid.Column="3" Grid.Row="2"/>
-
-                <Label Text="3" Grid.Column="1" Grid.Row="3"/>
-                <Label Text="Keluarkan Suara Polisi" Grid.Column="2" Grid.Row="3"/>
-                <Button x:Name="btnSound3" Text="Play" Grid.Column="3" Grid.Row="3"/>
-
-                <Label Text="4" Grid.Column="1" Grid.Row="4"/>
-                <Label Text="Keluarkan Suara Teriakan" Grid.Column="2" Grid.Row="4"/>
-                <Button x:Name="btnSound4" Text="Play" Grid.Column="3" Grid.Row="4"/>
-
-                <Label Text="5" Grid.Column="1" Grid.Row="5"/>
-                <Label Text="Nyalakan LED" Grid.Column="2" Grid.Row="5"/>
-                <Button x:Name="btnSound5" Text="Play" Grid.Column="3" Grid.Row="5"/>
-
-                <Label Text="6" Grid.Column="1" Grid.Row="6"/>
-                <Label Text="Matikan LED" Grid.Column="2" Grid.Row="6"/>
-                <Button x:Name="btnSound6" Text="Play" Grid.Column="3" Grid.Row="6"/>
-            </Grid>            
+                <Label Text="9" Grid.Column="1" Grid.Row="9"/>
+                <Label Text="Lampu Kamar Atas" Grid.Column="2" Grid.Row="9"/>
+                <!--<Button x:Name="btnOn" Text="On" Grid.Column="3" Grid.Row="8" CommandParameter="DEVICEON"/>-->
+                <Button x:Name="btnKmrAts" Text="Off" Grid.Column="3" Grid.Row="9" CommandParameter="DEVICEOFF"/>
+                </Grid>        
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

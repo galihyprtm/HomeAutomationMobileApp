@@ -1,17 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="BMC.Security.MobileApp.Pages.Contact">
-    <ContentPage.Content>
-        <StackLayout>
+             x:Class="BMC.Security.MobileApp.Pages.Contact"
+             Title="Contact">
+    <ContentPage.Content visual="Material">
+        <FlexLayout Direction="Column"
+                AlignItems="Center"
+                JustifyContent="SpaceEvenly">
             <Label Text="BMC"
                 VerticalOptions="CenterAndExpand"  FontSize="Medium"/>
-            <Label Text="Alamat"
-                VerticalOptions="CenterAndExpand"  FontSize="Small"/>
-            <Label Text="Jl Melati No.22A Taman Cimanggu"
-                VerticalOptions="CenterAndExpand"  FontSize="Small"/>
+            <Label Text="Alamat: Jl Melati No.22A Taman Cimanggu"
+                VerticalOptions="CenterAndExpand" HorizontalOptions="Start"  FontSize="Small"/>
             <Label Text="Support: bmc@gmail.com"
                 VerticalOptions="CenterAndExpand"  FontSize="Small"/>
-        </StackLayout>
+        </FlexLayout>
     </ContentPage.Content>
 </ContentPage>
